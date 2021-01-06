@@ -1,1 +1,2 @@
 github "SDWebImage/SDWebImage" "5.10.2"
+github "cloudkite/Masonry" "v1.1.0"

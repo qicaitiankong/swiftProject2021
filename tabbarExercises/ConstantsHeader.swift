@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import SDWebImage
+import Masonry
+
 /// 屏宽
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width
 /// 屏高

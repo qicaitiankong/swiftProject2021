@@ -7,11 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C968995A25A5565600C7F67A /* MiddleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C968995925A5565600C7F67A /* MiddleListTableViewCell.swift */; };
+		C968995C25A57EF800C7F67A /* MiddleListPageDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C968995B25A57EF800C7F67A /* MiddleListPageDataModel.swift */; };
+		C968995E25A57FD900C7F67A /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C968995D25A57FD900C7F67A /* Masonry.framework */; };
+		C968996025A5802600C7F67A /* Masonry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C968995D25A57FD900C7F67A /* Masonry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C97128E825A44565009112AC /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97128E725A44565009112AC /* MainTabBarViewController.swift */; };
 		C97128EA25A445BC009112AC /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97128E925A445BC009112AC /* MainPageViewController.swift */; };
 		C97128EC25A445D6009112AC /* PersonalPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97128EB25A445D6009112AC /* PersonalPageViewController.swift */; };
 		C97128F225A44D8B009112AC /* ConstantsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97128F125A44D8B009112AC /* ConstantsHeader.swift */; };
 		C97128F525A4A645009112AC /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97128F425A4A645009112AC /* SDWebImage.framework */; };
+		C97128F725A4AD99009112AC /* SDWebImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97128F425A4A645009112AC /* SDWebImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C98A0F4425A2B38400E4A0CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A0F4325A2B38400E4A0CA /* AppDelegate.swift */; };
 		C98A0F4825A2B38400E4A0CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A0F4725A2B38400E4A0CA /* ViewController.swift */; };
 		C98A0F4B25A2B38400E4A0CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C98A0F4925A2B38400E4A0CA /* Main.storyboard */; };
@@ -40,7 +45,33 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		C968995F25A5801000C7F67A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C968996025A5802600C7F67A /* Masonry.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C97128F625A4AD77009112AC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C97128F725A4AD99009112AC /* SDWebImage.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		C968995925A5565600C7F67A /* MiddleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleListTableViewCell.swift; sourceTree = "<group>"; };
+		C968995B25A57EF800C7F67A /* MiddleListPageDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleListPageDataModel.swift; sourceTree = "<group>"; };
+		C968995D25A57FD900C7F67A /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Masonry.framework; path = Carthage/Build/iOS/Masonry.framework; sourceTree = "<group>"; };
 		C97128E725A44565009112AC /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		C97128E925A445BC009112AC /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		C97128EB25A445D6009112AC /* PersonalPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalPageViewController.swift; sourceTree = "<group>"; };
@@ -68,6 +99,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C968995E25A57FD900C7F67A /* Masonry.framework in Frameworks */,
 				C97128F525A4A645009112AC /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -109,6 +141,8 @@
 			isa = PBXGroup;
 			children = (
 				C98A0F4725A2B38400E4A0CA /* ViewController.swift */,
+				C968995925A5565600C7F67A /* MiddleListTableViewCell.swift */,
+				C968995B25A57EF800C7F67A /* MiddleListPageDataModel.swift */,
 			);
 			path = MiddlePage;
 			sourceTree = "<group>";
@@ -124,6 +158,7 @@
 		C97128F325A4A645009112AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C968995D25A57FD900C7F67A /* Masonry.framework */,
 				C97128F425A4A645009112AC /* SDWebImage.framework */,
 			);
 			name = Frameworks;
@@ -205,6 +240,8 @@
 				C98A0F3C25A2B38400E4A0CA /* Sources */,
 				C98A0F3D25A2B38400E4A0CA /* Frameworks */,
 				C98A0F3E25A2B38400E4A0CA /* Resources */,
+				C97128F625A4AD77009112AC /* CopyFiles */,
+				C968995F25A5801000C7F67A /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -326,6 +363,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C968995A25A5565600C7F67A /* MiddleListTableViewCell.swift in Sources */,
+				C968995C25A57EF800C7F67A /* MiddleListPageDataModel.swift in Sources */,
 				C97128E825A44565009112AC /* MainTabBarViewController.swift in Sources */,
 				C98A0F4825A2B38400E4A0CA /* ViewController.swift in Sources */,
 				C98A0F7625A2ED5F00E4A0CA /* NSObjectExtension.swift in Sources */,
@@ -518,6 +557,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = asddsdsd.Button;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -541,6 +581,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = asddsdsd.Button;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

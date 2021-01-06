@@ -7,28 +7,70 @@
 //
 
 import UIKit
-//import swiftJson
 
-class ViewController: UIViewController,UITabBarDelegate
+class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITableViewDataSource
 {
+    var tableView: UITableView?
+    lazy var modelArr: [MiddleListPageDataModel] = []
     
-    var tabbar: UITabBar!
-    var tabs = ["公开课","全栈课","设置"]
     override func viewDidLoad()
     {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        //addTabbar()
-        //testJsonData()
-        //swiftJson()
-       //getDataBySwiftJson()
-        //testPostRequest()
-        testGetRequest2()
+        addTableView()
+        testPostRequest()
+    }
+    func addTableView() {
+        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), style: .plain)
+        self.tableView?.backgroundColor = UIColor.white
+        self.tableView?.delegate = self
+        self.tableView?.dataSource = self
+        self.view.addSubview(self.tableView!)
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
+        return self.modelArr.count
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellFlag = "cell"
+        if let cell = tableView.dequeueReusableCell(withIdentifier: cellFlag)
+        {
+            let targetCell: MiddleListTableViewCell = cell as! MiddleListTableViewCell
+            if indexPath.row < self.modelArr.count
+            {
+                 targetCell.model = self.modelArr[indexPath.row]
+            }
+            return cell
+        }else
+        {
+            let cell = MiddleListTableViewCell.init(style: .default, reuseIdentifier: cellFlag)
+            if indexPath.row < self.modelArr.count
+            {
+                 cell.model = self.modelArr[indexPath.row]
+            }
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        
     }
     
     func testPostRequest()
     {
-        let urlString = "http://47.104.255.147:8089/SMBMS/wallet/myWallets?userId=162&status=0"
+        let urlString = "http://47.104.255.147:8089/SMBMS/marry/myCollects?userId=162&type=1&page=1"
         var myUrl: NSURL!
         myUrl = NSURL(string:urlString)
         let request = NSMutableURLRequest(url:myUrl as URL)
@@ -41,6 +83,22 @@ class ViewController: UIViewController,UITabBarDelegate
                     if let jsonObj = try? JSON.init(data: targetData){
                         
                         print(jsonObj)
+                        let status = jsonObj["status"].intValue
+                        if status == 0
+                        {
+                            let listArr = jsonObj["data"]["list"].arrayValue
+                            for dict:JSON in listArr
+                            {
+                                let model = MiddleListPageDataModel()
+                                model.imageUrlStr = "http://47.104.255.147:8089/LinPic/" + dict["headImg"].stringValue
+                                model.topTitleStr = "测试label文字字自适应能力而已" + model.imageUrlStr!
+                                model.nickNameStr = dict["nickname"].stringValue
+                                model.incomeStr = dict["incom"].stringValue
+                                self.modelArr.append(model)
+                                
+                            }
+                            self.tableView?.reloadData()
+                        }
                     }
                     
                 }
@@ -210,10 +268,12 @@ class ViewController: UIViewController,UITabBarDelegate
     
    func addTabbar()
     {
+        var tabbar: UITabBar!
+        var tabs = ["公开课","全栈课","设置"]
            tabbar = UITabBar(frame: CGRect(x: 0, y: self.view.bounds.height - 49, width: self.view.bounds.size.width, height: 49))
            
            var items: [UITabBarItem] = []
-           for tab in self.tabs
+           for tab in tabs
            {
                let tabItem = UITabBarItem()
                tabItem.title = tab
