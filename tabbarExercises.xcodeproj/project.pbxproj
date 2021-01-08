@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C9628DAF25A7E62500136748 /* MiddleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9628DAE25A7E62500136748 /* MiddleDetailViewController.swift */; };
+		C9628DB125A8391C00136748 /* NetWorkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9628DB025A8391C00136748 /* NetWorkManager.swift */; };
+		C963924F25A6D664006B706B /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C963924E25A6D664006B706B /* StringExtension.swift */; };
+		C963925125A6ED96006B706B /* MJRefresh.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C963925025A6ED95006B706B /* MJRefresh.framework */; };
+		C963925325A6EDB6006B706B /* MJRefresh.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C963925025A6ED95006B706B /* MJRefresh.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C968995A25A5565600C7F67A /* MiddleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C968995925A5565600C7F67A /* MiddleListTableViewCell.swift */; };
 		C968995C25A57EF800C7F67A /* MiddleListPageDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C968995B25A57EF800C7F67A /* MiddleListPageDataModel.swift */; };
 		C968995E25A57FD900C7F67A /* Masonry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C968995D25A57FD900C7F67A /* Masonry.framework */; };
@@ -46,6 +51,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		C963925225A6ED9D006B706B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C963925325A6EDB6006B706B /* MJRefresh.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C968995F25A5801000C7F67A /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -69,6 +84,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		C9628DAE25A7E62500136748 /* MiddleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleDetailViewController.swift; sourceTree = "<group>"; };
+		C9628DB025A8391C00136748 /* NetWorkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetWorkManager.swift; sourceTree = "<group>"; };
+		C963924E25A6D664006B706B /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		C963925025A6ED95006B706B /* MJRefresh.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MJRefresh.framework; path = Carthage/Build/iOS/MJRefresh.framework; sourceTree = "<group>"; };
 		C968995925A5565600C7F67A /* MiddleListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleListTableViewCell.swift; sourceTree = "<group>"; };
 		C968995B25A57EF800C7F67A /* MiddleListPageDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleListPageDataModel.swift; sourceTree = "<group>"; };
 		C968995D25A57FD900C7F67A /* Masonry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Masonry.framework; path = Carthage/Build/iOS/Masonry.framework; sourceTree = "<group>"; };
@@ -99,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C963925125A6ED96006B706B /* MJRefresh.framework in Frameworks */,
 				C968995E25A57FD900C7F67A /* Masonry.framework in Frameworks */,
 				C97128F525A4A645009112AC /* SDWebImage.framework in Frameworks */,
 			);
@@ -125,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				C98A0F7525A2ED5F00E4A0CA /* NSObjectExtension.swift */,
+				C963924E25A6D664006B706B /* StringExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -143,6 +164,8 @@
 				C98A0F4725A2B38400E4A0CA /* ViewController.swift */,
 				C968995925A5565600C7F67A /* MiddleListTableViewCell.swift */,
 				C968995B25A57EF800C7F67A /* MiddleListPageDataModel.swift */,
+				C9628DAE25A7E62500136748 /* MiddleDetailViewController.swift */,
+				C9628DB025A8391C00136748 /* NetWorkManager.swift */,
 			);
 			path = MiddlePage;
 			sourceTree = "<group>";
@@ -158,6 +181,7 @@
 		C97128F325A4A645009112AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C963925025A6ED95006B706B /* MJRefresh.framework */,
 				C968995D25A57FD900C7F67A /* Masonry.framework */,
 				C97128F425A4A645009112AC /* SDWebImage.framework */,
 			);
@@ -242,6 +266,7 @@
 				C98A0F3E25A2B38400E4A0CA /* Resources */,
 				C97128F625A4AD77009112AC /* CopyFiles */,
 				C968995F25A5801000C7F67A /* CopyFiles */,
+				C963925225A6ED9D006B706B /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -369,9 +394,12 @@
 				C98A0F4825A2B38400E4A0CA /* ViewController.swift in Sources */,
 				C98A0F7625A2ED5F00E4A0CA /* NSObjectExtension.swift in Sources */,
 				C98A0F4425A2B38400E4A0CA /* AppDelegate.swift in Sources */,
+				C9628DB125A8391C00136748 /* NetWorkManager.swift in Sources */,
 				C97128EA25A445BC009112AC /* MainPageViewController.swift in Sources */,
 				C97128EC25A445D6009112AC /* PersonalPageViewController.swift in Sources */,
+				C9628DAF25A7E62500136748 /* MiddleDetailViewController.swift in Sources */,
 				C97128F225A44D8B009112AC /* ConstantsHeader.swift in Sources */,
+				C963924F25A6D664006B706B /* StringExtension.swift in Sources */,
 				C98A0F7825A2EFB100E4A0CA /* SwiftyJSON.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -551,6 +579,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/tabbarExercises/Third/SwiftyJSON.swift";
 				INFOPLIST_FILE = tabbarExercises/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -575,6 +604,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/tabbarExercises/Third/SwiftyJSON.swift";
 				INFOPLIST_FILE = tabbarExercises/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

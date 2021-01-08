@@ -9,13 +9,16 @@
 import UIKit
 
 class MiddleListTableViewCell: UITableViewCell {
-    var testNum = "测试lldb"
-    var model: MiddleListPageDataModel?{
-        willSet{
-            setValueToView(model: newValue)
-        }
-    }
-    func setValueToView(model:MiddleListPageDataModel?) {
+    
+    var model: MiddleListPageDataModel?
+    var topImageView: UIImageView?
+    var topTitleLabe: UILabel?
+    var nickNameLab: UILabel?
+    var incomeLabe: UILabel?
+    
+    /// 界面赋值
+    func setDataToView() {
+       
         if let imageUrlStr = model?.imageUrlStr
         {
             if let imageUrl = URL(string: imageUrlStr)
@@ -35,12 +38,22 @@ class MiddleListTableViewCell: UITableViewCell {
         {
             self.incomeLabe?.text = incomeStr
         }
+        
+        self.topTitleLabe?.mas_updateConstraints({ (make) in
+            make?.height.mas_equalTo()(model?.titleHeight)
+        })
+
+        self.nickNameLab?.mas_updateConstraints({ (make) in
+                  
+            make?.top.mas_equalTo()(self.topTitleLabe?.mas_bottom)?.offset()(10)
+        })
+
+       self.incomeLabe?.mas_updateConstraints({ (make) in
+           make?.top.mas_equalTo()(self.nickNameLab)
+       })
     }
     
-    var topImageView: UIImageView?
-    var topTitleLabe: UILabel?
-    var nickNameLab: UILabel?
-    var incomeLabe: UILabel?
+   
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?)
     {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -59,12 +72,7 @@ class MiddleListTableViewCell: UITableViewCell {
         self.contentView.addSubview(self.topTitleLabe!)
         self.contentView.addSubview(self.nickNameLab!)
         self.contentView.addSubview(self.incomeLabe!)
-        
-        if self.topImageView != nil
-        {
-            print("self.topImageView != nil")
-        }
-        
+        // 10 + 50
         self.topImageView?.mas_makeConstraints({ (make) in
             //swift 中不允许这样写，隐性解包报错
             //make?.left.mas_equalTo()(self.contentView)?.mas_offset()(10)
@@ -76,18 +84,18 @@ class MiddleListTableViewCell: UITableViewCell {
             make?.width.mas_equalTo()(50)
             make?.height.mas_equalTo()(50)
         })
-        
+        //
         self.topTitleLabe?.mas_makeConstraints({ (make) in
             make?.left.mas_equalTo()(self.topImageView?.mas_right)?.offset()(10)
             make?.right.mas_equalTo()(self.contentView.mas_right)?.offset()(-10)
             make?.top.mas_equalTo()(self.topImageView)
-            make?.height.mas_equalTo()(30)
+            make?.height.mas_equalTo()(5)
         })
 
         self.nickNameLab?.mas_makeConstraints({ (make) in
             make?.left.mas_equalTo()(self.topTitleLabe)
             make?.width.mas_equalTo()(100)
-            make?.bottom.mas_equalTo()(self.topImageView?.mas_bottom)
+            make?.top.mas_equalTo()(self.topTitleLabe?.mas_bottom)?.offset()(10)
             make?.height.mas_equalTo()(10)
         })
 
@@ -103,20 +111,8 @@ class MiddleListTableViewCell: UITableViewCell {
     
     
     
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//        // Initialization code
-//    }
-//
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
 
 }

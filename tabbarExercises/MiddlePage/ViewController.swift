@@ -7,25 +7,71 @@
 //
 
 import UIKit
+import MJRefresh
 
-class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITableViewDataSource
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,MakeDetailPageWorkSomethingProtocol
 {
+    var pageNumber = 1
+    var isRefresh = true
     var tableView: UITableView?
     lazy var modelArr: [MiddleListPageDataModel] = []
+    // delegate实现
+    var testStr = "测试代理属性"
+    var num: Int{
+        get{
+            return 100
+        }
+    }
+    var num2: String{
+        get{
+            return testStr
+        }
+        set
+        {
+            testStr = "测试代理属性!"
+        }
+    }
+    // delegate
+    func giveValue() {
+          print("详情页面安排我去做事情")
+        startRefresh()
+    }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor.gray
         addTableView()
-        testPostRequest()
+        self.tableView?.mj_header?.beginRefreshing()
+        
     }
     func addTableView() {
-        self.tableView = UITableView(frame: CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT), style: .plain)
+        self.tableView = UITableView(frame: CGRect(x: 0, y: GET_NAVGATION_HEIGHT(), width: SCREEN_WIDTH, height: IPHONE_CENTER_VIEW_HEIGHT), style: .plain)
         self.tableView?.backgroundColor = UIColor.white
+        self.tableView?.tableFooterView = UIView.init(frame: CGRect.zero)
         self.tableView?.delegate = self
         self.tableView?.dataSource = self
         self.view.addSubview(self.tableView!)
+        
+        let refreshHeader = MJRefreshNormalHeader()
+        refreshHeader.setRefreshingTarget(self, refreshingAction: #selector(self.startRefresh))
+        self.tableView?.mj_header = refreshHeader
+       
+        let refreshFooter = MJRefreshAutoNormalFooter()
+        refreshFooter.setRefreshingTarget(self, refreshingAction: #selector(self.startLoading))
+        self.tableView?.mj_footer = refreshFooter
+        
+    }
+    
+    @objc func startRefresh() {
+        pageNumber = 1
+        isRefresh = true
+        requestData(page: pageNumber)
+    }
+    @objc func startLoading() {
+        pageNumber += 1
+        isRefresh = false
+        requestData(page: pageNumber)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
@@ -39,7 +85,11 @@ class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITa
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 70
+        if indexPath.row < self.modelArr.count{
+            let model = self.modelArr[indexPath.row]
+            return model.cellHeight
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -49,15 +99,18 @@ class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITa
             let targetCell: MiddleListTableViewCell = cell as! MiddleListTableViewCell
             if indexPath.row < self.modelArr.count
             {
-                 targetCell.model = self.modelArr[indexPath.row]
+                targetCell.model = self.modelArr[indexPath.row]
+                targetCell.setDataToView()
             }
             return cell
         }else
         {
             let cell = MiddleListTableViewCell.init(style: .default, reuseIdentifier: cellFlag)
+            cell.selectionStyle = .none
             if indexPath.row < self.modelArr.count
             {
-                 cell.model = self.modelArr[indexPath.row]
+                cell.model = self.modelArr[indexPath.row]
+                cell.setDataToView()
             }
             return cell
         }
@@ -65,158 +118,96 @@ class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
+        let detailVC = MiddleDetailViewController()
+        detailVC.myDelagate = self
+        //将函数地址赋给闭包变量
+        detailVC.refreshPageListClosure = startRefresh
         
+        detailVC.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(detailVC, animated: true)
     }
     
-    func testPostRequest()
+    
+    func requestData(page:Int)
     {
-        let urlString = "http://47.104.255.147:8089/SMBMS/marry/myCollects?userId=162&type=1&page=1"
-        var myUrl: NSURL!
-        myUrl = NSURL(string:urlString)
-        let request = NSMutableURLRequest(url:myUrl as URL)
-        request.httpMethod = "POST"
-        //weak var weakSelf: ViewController? = self
-        let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, err) in
-             DispatchQueue.main.async {
+        let urlString = "http://47.104.255.147:8089/SMBMS/marry/myCollects"
+        let netManager = NetWorkManager()
+        netManager.acquirDataByPostRequest(urlStr: urlString, paraDict: ["userId":162,"page":page,"type":1]) { (data, response, err) in
+            self.dealData(data: data, err: err)
+            
+            print(Thread.current)
+            
+        }
+    }
+    
+    func dealData(data: Data?,err: Error?) ->Void {
+        
+        if isRefresh {
+            self.tableView?.mj_footer?.resetNoMoreData()
+            self.tableView?.mj_header?.endRefreshing()
+        }
+        if let error = err
+        {
+            print(error.localizedDescription)
+            
+            if isRefresh == false
+            {
+                self.tableView?.mj_footer?.endRefreshing()
+            }
+        }else
+        {
+            if isRefresh
+            {
+                self.modelArr.removeAll()
+            }
+            
                 if let targetData = data
                 {
                     if let jsonObj = try? JSON.init(data: targetData){
                         
-                        print(jsonObj)
                         let status = jsonObj["status"].intValue
                         if status == 0
                         {
                             let listArr = jsonObj["data"]["list"].arrayValue
-                            for dict:JSON in listArr
+                            for dataDict:JSON in listArr
                             {
-                                let model = MiddleListPageDataModel()
-                                model.imageUrlStr = "http://47.104.255.147:8089/LinPic/" + dict["headImg"].stringValue
-                                model.topTitleStr = "测试label文字字自适应能力而已" + model.imageUrlStr!
-                                model.nickNameStr = dict["nickname"].stringValue
-                                model.incomeStr = dict["incom"].stringValue
+                                let model = MiddleListPageDataModel(dict: dataDict)
                                 self.modelArr.append(model)
-                                
+                            }
+                            if listArr.isEmpty{
+                                if isRefresh == false
+                                {
+                                    self.tableView?.mj_footer?.endRefreshingWithNoMoreData()
+                                    if self.pageNumber > 1{
+                                         self.pageNumber -= 1
+                                    }
+                                   
+                                }else{
+                                    self.tableView?.reloadData()
+                                }
+                            }else
+                            {
+                                if isRefresh == false
+                                           {
+                                               self.tableView?.mj_footer?.endRefreshing()
+                                           }
+                                self.tableView?.reloadData()
+                            }
+                            
+                            
+                        }else
+                        {
+                            if isRefresh == false && self.pageNumber > 1
+                            {
+                                self.pageNumber -= 1
                             }
                             self.tableView?.reloadData()
                         }
+                        
                     }
-                    
                 }
-            }
-        }
-        task.resume()
-    }
-     func testGetRequest2()
-        {
-            let urlString = "http://47.104.255.147:8089/LinPic/userPic/166/2e916952-6029-43bb-b868-a47803417dee.o6zAJszNwPS00IesFkn79wg-n95k.YuOuivovKZ9p021925d37b7b1aa13827dd47e49c8754.png"
-                    var myUrl: NSURL!
-                   myUrl = NSURL(string:urlString)
-                   let request = NSMutableURLRequest(url:myUrl as URL)
-                   request.httpMethod = "GET"
-                   //weak var weakSelf: ViewController? = self
-                   let task = URLSession.shared.dataTask(with: request as URLRequest) { (data, response, err) in
-                    //这是一个新线程，默认不是主线程！
-                    //print(Thread.current)
-                    
-                    DispatchQueue.main.async {
-                        print("回到主线程")
-                        if let targetData = data
-                                               {
-                        //                           if let jsonObj = try? JSON.init(data: targetData){
-                        //                               print(jsonObj)
-                        //                           }
-                                                   
-                                               }
-                                           }
-                    }
-                       
-                   task.resume()
             
         }
-    
-    
-    
-    //swiftJson 与URLSession结合
-    func getDataBySwiftJson()
-    {
-        
-        //此网络地址已经失效
-        let url = URL(string: "http://www.hangge.com/getJsonData.php")
-        //创建请求对象
-        let request = URLRequest(url: url!)
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            if error != nil {
-                print("error")
-            }else
-            {
-                print("解析正确： data=\(data!)")
-                if let responseData = data
-                {
-                    
-                     if let jsonObject = try? JSON(data: responseData)
-                     {
-                        if let number = jsonObject[0]["phones"][0]["number"].string
-                        {
-                            print("第一个人的电话：\(number)")
-                        }else
-                        {
-                            print("解析出错：\(jsonObject[0]["phones"][0]["number"].string!)")
-                        }
-                    }else
-                     {
-                        print("对象转化失败")
-                    }
-                }else
-                {
-                    print("data 为空")
-                }
-            }
-        }
-        dataTask.resume()
-    }
-    
-    
-    /// 使用swiftJson 快速解析
-    func swiftJson(){
-        /*
-         同 JSONSerialization  相比，在获取多层次结构的JSON数据时。SwiftyJSON不需要一直判断这个节点是否存在，是不是我们想要的class，下一个节点是否存在，是不是我们想要的class…。同时，SwiftyJSON内部会自动对optional（可选类型）进行拆包（Wrapping ），大大简化了代码。
-         */
-        
-        
-        
-        let jsonStr = "[{\"name\": \"hangge\", \"age\": 100, \"phones\": [{\"name\": \"公司\",\"number\": \"123456\"}, {\"name\": \"家庭\",\"number\": \"001\"}]}, {\"name\": \"big boss\",\"age\": 1,\"phones\": [{ \"name\": \"公司\",\"number\": \"111111\"}]}]"
-        
-         print("对象：\(getObjectFromJsonStrZH(dataInfo: jsonStr)!)")
-        
-        if let jsonData = getDataFromJsonStrZH(jsonStr: jsonStr)
-        {
-            if let jsonObject = try? JSON(data: jsonData)
-            {
-                 /*下标访问方式三种
-                 1、let number = json[0]["phones"][0]["number"].stringValue
-                 2.通过数组访问  jsonObject[0,"phones",0,"number"]
-                 3、let keys:[JSONSubscriptType] = [0,"phones",0,"number"]
-                 let number = json[keys].stringValue
-                 */
-                //
-                if let number = jsonObject[0]["phones"][0]["number"].string
-                {
-                    print("第一个人的第一个电话：\(number)")
-                }else
-                {//如果没取到值，还可以走到错误处理来了，打印一下看看错在哪：
-                    //print("swift json 解析出错：\(jsonObject[0]["phones22"][0]["number"])")
-                }
-                    //json对象 -> json字符串
-                 //jsonObject.rawString()
-                    //json对象 -> 字典
-                //jsonObject.dictionaryObject
-                //json对象 -> 数组
-                //jsonObject.arrayObject
-                
-            }
-        }
-        
-        
     }
     
     /// 系统方法测试json 和对象相互转化
@@ -235,13 +226,6 @@ class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITa
                     "uname": "张三",
                     "tel": ["mobile": "138", "home": "010"]
                 ]
-                
-        //        let testDict = [
-        //                   "张三",
-        //                   "tel"
-        //               ]
-               
-               
                 
                 //判断是否合法
                 if JSONSerialization.isValidJSONObject(testDict)
@@ -265,29 +249,9 @@ class ViewController: UIViewController,UITabBarDelegate,UITableViewDelegate,UITa
                 }
     }
     
+        
     
-   func addTabbar()
-    {
-        var tabbar: UITabBar!
-        var tabs = ["公开课","全栈课","设置"]
-           tabbar = UITabBar(frame: CGRect(x: 0, y: self.view.bounds.height - 49, width: self.view.bounds.size.width, height: 49))
-           
-           var items: [UITabBarItem] = []
-           for tab in tabs
-           {
-               let tabItem = UITabBarItem()
-               tabItem.title = tab
-               items.append(tabItem)
-           }
-           tabbar.setItems(items, animated: true)
-           tabbar.delegate = self
-           self.view.addSubview(tabbar)
-    }
-       
-   func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem)
-   {
-       print("\(item.title)")
-   }
+    
     
     override func didReceiveMemoryWarning()
     {

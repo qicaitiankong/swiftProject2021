@@ -1,2 +1,3 @@
+github "CoderMJLee/MJRefresh" "3.5.1"
 github "SDWebImage/SDWebImage" "5.10.2"
 github "cloudkite/Masonry" "v1.1.0"

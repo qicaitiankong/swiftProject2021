@@ -9,6 +9,7 @@
 import UIKit
 import SDWebImage
 import Masonry
+import MJRefresh
 
 /// 屏宽
 let SCREEN_WIDTH = UIScreen.main.bounds.size.width

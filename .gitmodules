@@ -4,3 +4,6 @@
 [submodule "Carthage/Checkouts/Masonry"]
 	path = Carthage/Checkouts/Masonry
 	url = https://github.com/cloudkite/Masonry.git
+[submodule "Carthage/Checkouts/MJRefresh"]
+	path = Carthage/Checkouts/MJRefresh
+	url = https://github.com/CoderMJLee/MJRefresh.git
