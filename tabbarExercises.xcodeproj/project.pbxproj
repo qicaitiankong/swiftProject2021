@@ -22,6 +22,8 @@
 		C97128F225A44D8B009112AC /* ConstantsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97128F125A44D8B009112AC /* ConstantsHeader.swift */; };
 		C97128F525A4A645009112AC /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97128F425A4A645009112AC /* SDWebImage.framework */; };
 		C97128F725A4AD99009112AC /* SDWebImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C97128F425A4A645009112AC /* SDWebImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C9860BB725A9822A00053599 /* TestOcViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9860BB625A9822A00053599 /* TestOcViewController.m */; };
+		C9860BBC25A98FB200053599 /* TestSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9860BBB25A98FB200053599 /* TestSwift.swift */; };
 		C98A0F4425A2B38400E4A0CA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A0F4325A2B38400E4A0CA /* AppDelegate.swift */; };
 		C98A0F4825A2B38400E4A0CA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98A0F4725A2B38400E4A0CA /* ViewController.swift */; };
 		C98A0F4B25A2B38400E4A0CA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C98A0F4925A2B38400E4A0CA /* Main.storyboard */; };
@@ -96,6 +98,10 @@
 		C97128EB25A445D6009112AC /* PersonalPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalPageViewController.swift; sourceTree = "<group>"; };
 		C97128F125A44D8B009112AC /* ConstantsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantsHeader.swift; sourceTree = "<group>"; };
 		C97128F425A4A645009112AC /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = "<group>"; };
+		C9860BB525A9822A00053599 /* TestOcViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TestOcViewController.h; sourceTree = "<group>"; };
+		C9860BB625A9822A00053599 /* TestOcViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TestOcViewController.m; sourceTree = "<group>"; };
+		C9860BB825A9838700053599 /* tabbarExercises-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tabbarExercises-Bridging-Header.h"; sourceTree = "<group>"; };
+		C9860BBB25A98FB200053599 /* TestSwift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSwift.swift; sourceTree = "<group>"; };
 		C98A0F4025A2B38400E4A0CA /* tabbarExercises.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tabbarExercises.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C98A0F4325A2B38400E4A0CA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C98A0F4725A2B38400E4A0CA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -224,6 +230,10 @@
 				C98A0F5125A2B38700E4A0CA /* Info.plist */,
 				C97128E725A44565009112AC /* MainTabBarViewController.swift */,
 				C97128F125A44D8B009112AC /* ConstantsHeader.swift */,
+				C9860BB525A9822A00053599 /* TestOcViewController.h */,
+				C9860BB625A9822A00053599 /* TestOcViewController.m */,
+				C9860BB825A9838700053599 /* tabbarExercises-Bridging-Header.h */,
+				C9860BBB25A98FB200053599 /* TestSwift.swift */,
 			);
 			path = tabbarExercises;
 			sourceTree = "<group>";
@@ -325,6 +335,7 @@
 				TargetAttributes = {
 					C98A0F3F25A2B38400E4A0CA = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 					C98A0F5525A2B38700E4A0CA = {
 						CreatedOnToolsVersion = 11.5;
@@ -390,9 +401,11 @@
 			files = (
 				C968995A25A5565600C7F67A /* MiddleListTableViewCell.swift in Sources */,
 				C968995C25A57EF800C7F67A /* MiddleListPageDataModel.swift in Sources */,
+				C9860BB725A9822A00053599 /* TestOcViewController.m in Sources */,
 				C97128E825A44565009112AC /* MainTabBarViewController.swift in Sources */,
 				C98A0F4825A2B38400E4A0CA /* ViewController.swift in Sources */,
 				C98A0F7625A2ED5F00E4A0CA /* NSObjectExtension.swift in Sources */,
+				C9860BBC25A98FB200053599 /* TestSwift.swift in Sources */,
 				C98A0F4425A2B38400E4A0CA /* AppDelegate.swift in Sources */,
 				C9628DB125A8391C00136748 /* NetWorkManager.swift in Sources */,
 				C97128EA25A445BC009112AC /* MainPageViewController.swift in Sources */,
@@ -573,7 +586,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = N64S25EDC3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -589,6 +604,8 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = asddsdsd.Button;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/tabbarExercises/tabbarExercises-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -598,7 +615,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = N64S25EDC3;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -614,6 +633,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = asddsdsd.Button;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/tabbarExercises/tabbarExercises-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
